@@ -139,7 +139,7 @@ export class UserController {
   ): Promise<User> {
     const password = await hash(newUserRequest.password, await genSalt());
     const savedUser = await this.userRepository.create(
-      _.omit(newUserRequest, 'password'),
+      {'email': newUserRequest.email}
     );
 
     await this.userRepository.userCredentials(savedUser.id).create({password});
